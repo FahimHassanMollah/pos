@@ -32,4 +32,7 @@ Route::get('/groups',[UserGroupsController::class,'index'])->name('group.index')
 Route::get('/groups/create',[UserGroupsController::class,'create'])->name('group.create');
 Route::post('/groups/create',[UserGroupsController::class,'store'])->name('group.store');
 
-Route::get('/users',[UsersController::class,'index']);
+// Route::get('/users',[UsersController::class,'index']);
+
+
+Route::resource('users', UsersController::class);
