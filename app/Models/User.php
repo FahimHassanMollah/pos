@@ -4,10 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Model
 {
     use HasFactory;
-    protected $guarded = ['_token'];
+    use SoftDeletes;
+    protected $guarded = ['_token', '_method'];
+
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
 
 }

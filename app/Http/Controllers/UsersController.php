@@ -6,6 +6,8 @@ use App\Http\Requests\CreateUserRequest;
 use App\Models\Group;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UsersController extends Controller
 {
@@ -55,9 +57,9 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        return view('users.show',compact('user'));
     }
 
     /**
@@ -68,7 +70,8 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        return view('');
+        $groups = Group::all();
+        return view('users.edit',compact(['user','groups']));
     }
 
     /**
@@ -78,9 +81,41 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,$user)
     {
-        //
+        $user = User::findOrFail($user);
+        // dd($request->all());
+        $request->validate([
+            'group_id'  => 'required',
+            'name'      => 'required|string',
+            'phone'     => 'required|numeric|unique:users,phone,'.$user->id,
+            'email'     => 'required|email|unique:users,email,' . $user->id,
+        ]);
+        try {
+            DB::beginTransaction();
+            if (Auth::user()) {
+                $user->admin_id = Auth::user()->id;
+            }
+
+            $user->group_id = $request->group_id;
+            $user->name     = $request->name;
+            $user->email    = $request->email;
+            $user->phone    = $request->phone;
+            $user->address  = $request->address;
+
+            $user->save();
+            DB::commit();
+
+            return redirect()->route('users.index')->with('success', 'User updated!');
+
+        } catch (\Throwable $th) {
+
+            Db::rollBack();
+            return redirect()->route('users.index')->with('error', 'User failed!');
+
+        }
+
+
     }
 
     /**
@@ -89,8 +124,10 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect()->route('users.index')->with('success', 'User deleted!');
+
     }
 }
