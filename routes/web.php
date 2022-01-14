@@ -37,4 +37,4 @@ Route::post('/groups/create',[UserGroupsController::class,'store'])->name('group
 
 
 Route::resource('users', UsersController::class);
-Route::resource('categories',CategoriesController::class);
+Route::resource('categories',CategoriesController::class,['except'=> ['categories.show']]);
