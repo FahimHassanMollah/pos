@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\UserGroupsController;
@@ -18,25 +19,37 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', function () {
-    return view('layouts.main-layout');
+
+// login routes
+Route::get('/login',[LoginController::class,'login'])->name('login');
+Route::post('/login',[LoginController::class, 'authenticate'])->name('login.confirm');
+
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/', function () {
+        return view('layouts.main-layout');
+    });
+
+    // Route::get('users', function () {
+    //     return view('users.users');
+    // });
+
+    // Route::get('groups', function () {
+    //     return view('groups.groups');
+    // });
+
+    Route::get('/groups', [UserGroupsController::class, 'index'])->name('group.index');
+    Route::get('/groups/create', [UserGroupsController::class, 'create'])->name('group.create');
+    Route::post('/groups/create', [UserGroupsController::class, 'store'])->name('group.store');
+
+    // Route::get('/users',[UsersController::class,'index']);
+
+
+    Route::resource('users', UsersController::class);
+    Route::resource('categories', CategoriesController::class, ['except' => ['categories.show']]);
+    Route::resource('products', ProductsController::class);
+
+    Route::post('/logout',[LoginController::class,'logout'])->name('logout');
+
 });
-
-// Route::get('users', function () {
-//     return view('users.users');
-// });
-
-// Route::get('groups', function () {
-//     return view('groups.groups');
-// });
-
-Route::get('/groups',[UserGroupsController::class,'index'])->name('group.index');
-Route::get('/groups/create',[UserGroupsController::class,'create'])->name('group.create');
-Route::post('/groups/create',[UserGroupsController::class,'store'])->name('group.store');
-
-// Route::get('/users',[UsersController::class,'index']);
-
-
-Route::resource('users', UsersController::class);
-Route::resource('categories',CategoriesController::class,['except'=> ['categories.show']]);
-Route::resource('products',ProductsController::class);
