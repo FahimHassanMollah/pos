@@ -59,7 +59,8 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
-        return view('users.show',compact('user'));
+        $tab_menu = 'user_info';
+        return view('users.show',compact(['user', 'tab_menu']));
     }
 
     /**

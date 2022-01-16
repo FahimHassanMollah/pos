@@ -4,6 +4,10 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\UserGroupsController;
+use App\Http\Controllers\UserPaymentsController;
+use App\Http\Controllers\UserPurchasesController;
+use App\Http\Controllers\UserReceiptsController;
+use App\Http\Controllers\UserSalesController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -46,7 +50,15 @@ Route::middleware(['auth'])->group(function () {
     // Route::get('/users',[UsersController::class,'index']);
 
 
+    // users
     Route::resource('users', UsersController::class);
+    Route::get('/users/{user}/sales',[UserSalesController::class , 'index'])->name('users.sale');
+    Route::get('/users/{user}/purchases',[UserPurchasesController::class , 'index'])->name('users.purchases');
+    Route::get('/users/{user}/payments',[UserPaymentsController::class , 'index'])->name('users.payments');
+    Route::get('/users/{user}/receipts',[UserReceiptsController::class , 'index'])->name('users.receipts');
+
+
+
     Route::resource('categories', CategoriesController::class, ['except' => ['categories.show']]);
     Route::resource('products', ProductsController::class);
 
