@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserPaymentsController extends Controller
 {
@@ -27,6 +28,7 @@ class UserPaymentsController extends Controller
         $payment->date = $request->date;
         $payment->amount = $request->amount;
         $payment->user_id = $user;
+        $payment->admin_id = Auth::id();
         $payment->note = $request->has('note') ? $request->note : '';
 
         $payment->save();

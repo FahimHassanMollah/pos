@@ -28,6 +28,7 @@
                     <thead>
                         <tr>
                             <th>User</th>
+                            <th>Created By</th>
                             <th>Date</th>
                             <th>Total</th>
                             <th>Note</th>
@@ -39,6 +40,7 @@
                         @foreach ($user->payments as $payment)
                             <tr>
                                 <td> {{ $user->name }} </td>
+                                <td> {{ $payment->admin->name }} </td>
                                 <td> {{ $payment->date }} </td>
                                 <td> {{ $payment->amount }} </td>
                                 <td> {{ $payment->note }} </td>

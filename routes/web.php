@@ -59,7 +59,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/users/{user}/payments',[UserPaymentsController::class , 'store'])->name('users.payments');
     Route::delete('/users/{user}/payments/{payment}',[UserPaymentsController::class , 'destroy'])->name('users.payments.destroy');
 
+
     Route::get('/users/{user}/receipts',[UserReceiptsController::class , 'index'])->name('users.receipts');
+    Route::post('/users/{user}/receipts',[UserReceiptsController::class , 'store'])->name('users.receipts.store');
+    Route::delete('/users/{user}/receipts/{receipt}',[UserReceiptsController::class , 'destroy'])->name('users.receipts.destroy');
 
 
 
