@@ -52,7 +52,17 @@ Route::middleware(['auth'])->group(function () {
 
     // users
     Route::resource('users', UsersController::class);
+
     Route::get('/users/{user}/sales',[UserSalesController::class , 'index'])->name('users.sale');
+
+    Route::post('/users/{user}/invoice/',[UserSalesController::class , 'createInvoice'])->name('users.sale.invoice.store');
+    Route::delete('users/sales/invoice/{invoice}/delete',[UserSalesController::class , 'deleteInvoice'])->name('users.sale.invoice.delete');
+    Route::get('/users/{user}/invoice/{invoice}',[UserSalesController::class , 'invoice'])->name('users.sale.invoice.view');
+    Route::post('/users/{user}/invoice/{invoice}/add/item',[UserSalesController::class , 'addItem'])->name('users.sale.invoice.add.item');
+    Route::delete('/users/invoice/delete-item/{item}',[UserSalesController::class , 'deleteItem'])->name('users.sale.invoice.delete.item');
+
+
+
     Route::get('/users/{user}/purchases',[UserPurchasesController::class , 'index'])->name('users.purchases');
 
     Route::get('/users/{user}/payments',[UserPaymentsController::class , 'index'])->name('users.payments');

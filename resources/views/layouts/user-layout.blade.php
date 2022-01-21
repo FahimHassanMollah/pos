@@ -8,7 +8,7 @@
                 Back </a>
         </div>
         <div class="col-md-8 text-right">
-            <a class="btn btn-info" href="{{ url('users/create') }}"> <i class="fa fa-plus"></i> New Sale </a>
+            <a class="btn btn-info" data-target="#newSaleInvoice" data-toggle="modal" > <i class="fa fa-plus"></i> New Sale Invoice </a>
             <a class="btn btn-info" href="{{ url('users/create') }}"> <i class="fa fa-plus"></i> New Purchase </a>
             <a class="btn btn-info" data-toggle="modal" data-target="#newPayment"> <i class="fa fa-plus"></i> New
                 Payment </a>
@@ -22,7 +22,7 @@
         <div class="col-md-2">
             <div class="nav flex-column nav-pills">
                 <a class="nav-link  @if ($tab_menu == 'user_info') active @endif " href=" {{ route('users.show', $user->id) }} ">User Info</a>
-                <a class="nav-link  @if ($tab_menu == 'sales') active @endif " href=" {{ route('users.sale', $user->id) }} ">Sales</a>
+                <a class="nav-link  @if ($tab_menu == 'sales') active @endif " href=" {{ route('users.sale', $user->id) }} ">Sales Invoices</a>
                 <a class="nav-link  @if ($tab_menu == 'purchases') active @endif"
                     href=" {{ route('users.purchases', $user->id) }} ">Purchases</a>
                 <a class="nav-link  @if ($tab_menu == 'payments') active @endif"
@@ -101,6 +101,46 @@
                                 <div class="form-group">
                                     <label for="ammount">Ammount</label>
                                     <input type="text" class="form-control" name="amount" id="ammount">
+                                </div>
+                                <div class="form-group">
+                                    <label for="ammount">Note</label>
+                                    <textarea name="note" id="" rows="5" name="note" class="form-control"></textarea>
+                                </div>
+
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Modal sales invoice modal -->
+            <div class="modal fade" id="newSaleInvoice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">New sales Invoice</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="{{ route('users.sale.invoice.store', $user->id) }}" method="post">
+                            @csrf
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="date">Date</label>
+                                    <input type="date" required name="date" class="form-control" id="date">
+                                </div>
+                                <div class="form-group">
+                                    <label for="ammount">Chalan Number</label>
+                                    <input type="text" class="form-control" name="challan_no" id="ammount">
                                 </div>
                                 <div class="form-group">
                                     <label for="ammount">Note</label>
