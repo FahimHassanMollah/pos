@@ -14,7 +14,7 @@ class UserPaymentsController extends Controller
         $tab_menu = 'payments';
         return view('users.payments.payments', compact(['user', 'tab_menu']));
     }
-    public function store(Request $request,$user)
+    public function store(Request $request,$user,$invoiceId = null)
     {
 
         $request->validate([
@@ -31,7 +31,17 @@ class UserPaymentsController extends Controller
         $payment->admin_id = Auth::id();
         $payment->note = $request->has('note') ? $request->note : '';
 
+        if ($invoiceId) {
+            $payment->purchase_invoice_id = $invoiceId;
+        }
+
         $payment->save();
+
+        if ($invoiceId) {
+            return redirect()->back()->with('success', 'Payment added successfully');
+        }
+
+
         return redirect()->route('users.payments',$user)->with('success', 'Payment created successfully');
     }
 

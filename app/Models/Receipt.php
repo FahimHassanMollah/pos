@@ -13,4 +13,8 @@ class Receipt extends Model
     {
         return $this->belongsTo(Admin::class);
     }
+    public function saleInvoice()
+    {
+        return $this->belongsTo(SaleInvoice::class);
+    }
 }

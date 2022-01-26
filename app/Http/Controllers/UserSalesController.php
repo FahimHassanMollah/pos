@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\PurchaseInvoice;
 use App\Models\SaleInvoice;
 use App\Models\SaleItem;
 use App\Models\User;
@@ -34,7 +35,7 @@ class UserSalesController extends Controller
 
         return redirect()->route('users.sale', $user)->with('success', 'Sale invoice created successfully');
     }
-    
+
     public function deleteInvoice($invoice)
     {
         if (SaleInvoice::destroy($invoice)) {
@@ -83,6 +84,10 @@ class UserSalesController extends Controller
         }
 
     }
+
+
+
+
 
 
 }

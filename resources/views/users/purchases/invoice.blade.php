@@ -54,7 +54,7 @@
                                 <td>{{ $item->quantity }}</td>
                                 <td>{{ $item->total }}</td>
                                 <td>
-                                    <form action="{{ route('users.sale.invoice.delete.item', $item->id) }}" method="post">
+                                    <form action="{{ route('users.purchases.invoice.delete.item', $item->id) }}" method="post">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger">Delete</button>
@@ -72,8 +72,8 @@
                         </th>
                         <th>
                             <button class="btn btn-secondary btn-sm" data-toggle="modal"
-                                data-target="#newReceiptsForInvoice">
-                                <i class="fa fa-dollar-sign "></i> Add Receipt
+                                data-target="#newPaymentsForInvoice">
+                                <i class="fa fa-dollar-sign "></i> Add Payment
                             </button>
                         </th>
                         <th colspan="1" class="text-right"> Total: </th>
@@ -81,12 +81,12 @@
                     </tr>
                     <tr>
                         <th colspan="4" class="text-right"> Paid : </th>
-                        <td class="text-primary font-weight-bold">{{ $invoice->receipts->sum('amount') }}</td>
+                        <td class="text-primary font-weight-bold">{{ $invoice->payments->sum('amount') }}</td>
                     </tr>
                     <tr>
                         <th colspan="4" class="text-right"> Due : </th>
                         <td class="text-primary font-weight-bold">
-                            {{ $invoice->items->sum('total') - $invoice->receipts->sum('amount') }}</td>
+                            {{ $invoice->items->sum('total') - $invoice->payments->sum('amount') }}</td>
                     </tr>
 
                 </table>
@@ -105,7 +105,7 @@
                         </button>
                     </div>
                     <form
-                        action="{{ route('users.sale.invoice.add.item', ['user' => $user->id, 'invoice' => $invoice->id]) }}"
+                        action="{{ route('users.purchases.invoice.add.item', ['user' => $user->id, 'invoice' => $invoice->id]) }}"
                         method="post">
                         @csrf
 
@@ -155,19 +155,19 @@
             </div>
         </div>
 
-        <!-- add  Receipts modal -->
-        <div class="modal fade" id="newReceiptsForInvoice" tabindex="-1" role="dialog" aria-labelledby="newReceipts"
+        <!-- add  payment modal -->
+        <div class="modal fade" id="newPaymentsForInvoice" tabindex="-1" role="dialog" aria-labelledby="newReceipts"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">New Receipt For This Invoice</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">New Payment For This Invoice</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <form
-                        action="{{ route('users.receipts.store', ['user' => $user->id, 'invoiceId' => $invoice->id]) }}"
+                        action="{{ route('users.payments', ['user' => $user->id, 'invoiceId' => $invoice->id]) }}"
                         method="post">
                         @csrf
                         <div class="modal-body">

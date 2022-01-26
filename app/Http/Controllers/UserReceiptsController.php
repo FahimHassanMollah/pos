@@ -15,7 +15,7 @@ class UserReceiptsController extends Controller
         return view('users.receipts.receipts', compact(['user', 'tab_menu']));
     }
 
-    public function store(Request $request, $user)
+    public function store(Request $request, $user, $invoiceId = null)
     {
         $request->validate([
             'date'      => 'required',
@@ -31,7 +31,15 @@ class UserReceiptsController extends Controller
         $receipt->admin_id = Auth::id();
         $receipt->note = $request->has('note') ? $request->note : '';
 
+        if ($invoiceId) {
+            $receipt->sale_invoice_id = $invoiceId ;
+        }
+
         $receipt->save();
+        
+        if ($invoiceId) {
+            return redirect()->back()->with('success', 'Receipt added successfully');
+        }
 
         return redirect()->route('users.receipts', $user)->with('success', 'Receipt created successfully');
     }
