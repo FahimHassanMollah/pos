@@ -3,6 +3,9 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\productStockController;
+use App\Http\Controllers\Reports\PurchaseReportController;
+use App\Http\Controllers\Reports\SaleReportController;
 use App\Http\Controllers\UserGroupsController;
 use App\Http\Controllers\UserPaymentsController;
 use App\Http\Controllers\UserPurchasesController;
@@ -86,6 +89,17 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('categories', CategoriesController::class, ['except' => ['categories.show']]);
     Route::resource('products', ProductsController::class);
+
+
+    // stock
+    Route::get('stocks', [productStockController::class,'index'])->name('products.stock');
+
+
+
+    // reports
+    Route::get('reports/sales',[SaleReportController::class,'index'])->name('sale.report');
+    Route::get('reports/purchases',[PurchaseReportController::class,'index'])->name('purchase.report');
+
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });

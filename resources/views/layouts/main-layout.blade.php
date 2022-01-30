@@ -87,6 +87,23 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('categories.index') }}">Categories</a>
                         <a class="collapse-item" href="{{ url('products') }}">Products</a>
+                        <a class="collapse-item" href="{{ route('products.stock') }}">Stocks</a>
+                    </div>
+                </div>
+            </li>
+
+            {{-- reports --}}
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReports"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-boxes"></i>
+                    <span>Reports</span>
+                </a>
+                <div id="collapseReports" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('sale.report') }}">Sale</a>
+                        <a class="collapse-item" href="{{ route('purchase.report') }}">Purchase</a>
+                        <a class="collapse-item" href="{{ route('products.stock') }}">Stocks</a>
                     </div>
                 </div>
             </li>
