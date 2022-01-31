@@ -103,7 +103,8 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('sale.report') }}">Sale</a>
                         <a class="collapse-item" href="{{ route('purchase.report') }}">Purchase</a>
-                        <a class="collapse-item" href="{{ route('products.stock') }}">Stocks</a>
+                        <a class="collapse-item" href="{{ route('payment.report') }}">Payments</a>
+                        <a class="collapse-item" href="{{ route('receipt.report') }}">Receipts</a>
                     </div>
                 </div>
             </li>

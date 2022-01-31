@@ -4,7 +4,9 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\productStockController;
+use App\Http\Controllers\Reports\PaymentReportController;
 use App\Http\Controllers\Reports\PurchaseReportController;
+use App\Http\Controllers\Reports\ReceiptReportController;
 use App\Http\Controllers\Reports\SaleReportController;
 use App\Http\Controllers\UserGroupsController;
 use App\Http\Controllers\UserPaymentsController;
@@ -99,6 +101,8 @@ Route::middleware(['auth'])->group(function () {
     // reports
     Route::get('reports/sales',[SaleReportController::class,'index'])->name('sale.report');
     Route::get('reports/purchases',[PurchaseReportController::class,'index'])->name('purchase.report');
+    Route::get('reports/payments',[PaymentReportController::class,'index'])->name('payment.report');
+    Route::get('reports/receipts',[ReceiptReportController::class,'index'])->name('receipt.report');
 
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

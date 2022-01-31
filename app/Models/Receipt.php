@@ -17,4 +17,9 @@ class Receipt extends Model
     {
         return $this->belongsTo(SaleInvoice::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
