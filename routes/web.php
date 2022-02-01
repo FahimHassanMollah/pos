@@ -14,6 +14,12 @@ use App\Http\Controllers\UserPurchasesController;
 use App\Http\Controllers\UserReceiptsController;
 use App\Http\Controllers\UserSalesController;
 use App\Http\Controllers\UsersController;
+use App\Models\Payment;
+use App\Models\Product;
+use App\Models\PurchaseItem;
+use App\Models\Receipt;
+use App\Models\SaleItem;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,7 +43,17 @@ Route::post('/login', [LoginController::class, 'authenticate'])->name('login.con
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/', function () {
-        return view('layouts.main-layout');
+
+
+        return view('dashboard',[
+            'totalProducts' => Product::count('id'),
+            'totalSales' => SaleItem::sum('total'),
+            'totalPurchases' => PurchaseItem::sum('total'),
+            'totalUsers' => User::count('id'),
+            'totalReceipts' => Receipt::sum('amount'),
+            'totalPayments' => Payment::sum('amount'),
+            'totalStock' => PurchaseItem::sum('quantity') - SaleItem::sum('quantity')
+        ]);
     });
 
     // Route::get('users', function () {
